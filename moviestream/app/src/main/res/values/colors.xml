@@ -10,4 +10,5 @@
 
     <color name="background">#050202</color>
     <color name="bg_toolbar">#C10710</color>
+    <color name="scrim">#FBFBFB</color>
 </resources>

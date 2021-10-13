@@ -3,7 +3,7 @@
     <style name="Theme.MovieStream" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#0f171e</item>
-        <item name="colorPrimaryVariant">@color/bg_toolbar</item>
+        <item name="colorPrimaryVariant">@color/background</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
