@@ -6,14 +6,16 @@ public class CategoryItem implements Serializable {
     private int id;
     private String name;
     private String imgUrl;
+    private String fileUrl;
 
     public CategoryItem() {
     }
 
-    public CategoryItem(int id, String name, String imgUrl) {
+    public CategoryItem(int id, String name, String imgUrl,String fileUrl) {
         this.id = id;
         this.name = name;
         this.imgUrl = imgUrl;
+        this.fileUrl = fileUrl;
     }
 
     public int getId() {
@@ -38,5 +40,13 @@ public class CategoryItem implements Serializable {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 }
