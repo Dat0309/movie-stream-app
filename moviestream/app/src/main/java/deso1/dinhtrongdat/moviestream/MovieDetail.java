@@ -38,12 +38,12 @@ public class MovieDetail extends AppCompatActivity {
         imgBack = findViewById(R.id.imgBack);
 
         if(CategoryItem != null){
-            Glide.with(this).load(CategoryItem.getImgUrl()).into(imgDetail);
+            Glide.with(this).load(CategoryItem.getImg()).into(imgDetail);
             txtDetail.setText(CategoryItem.getName());
         }
         else{
-            Glide.with(this).load(bannerItem.getImgUrl()).into(imgDetail);
-            txtDetail.setText(bannerItem.getMovieName());
+            Glide.with(this).load(bannerItem.getImg()).into(imgDetail);
+            txtDetail.setText(bannerItem.getName());
         }
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -51,11 +51,11 @@ public class MovieDetail extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MovieDetail.this, VideoPlayer.class);
                 if(CategoryItem != null){
-                    intent.putExtra("url", CategoryItem.getFileUrl());
+                    intent.putExtra("url", CategoryItem.getVideo());
                     startActivity(intent);
                 }
                 else{
-                    intent.putExtra("url", bannerItem.getFileUrl());
+                    intent.putExtra("url", bannerItem.getVideo());
                     startActivity(intent);
                 }
             }

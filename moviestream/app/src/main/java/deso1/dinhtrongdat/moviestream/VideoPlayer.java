@@ -10,10 +10,10 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+
 
 
 public class VideoPlayer extends AppCompatActivity {
@@ -46,6 +46,10 @@ public class VideoPlayer extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        simpleExoPlayer.setPlayWhenReady(false);
         simpleExoPlayer.release();
+//        Intent serviceIntent = new Intent(VideoPlayer.this, FloatingWidgetService.class);
+//        serviceIntent.putExtra("videoUri", Uri.parse(getIntent().getStringExtra("url")).toString());
+//        startService(serviceIntent);
     }
 }

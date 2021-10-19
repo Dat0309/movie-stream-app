@@ -35,7 +35,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     @Override
     public void onBindViewHolder( CategoryItemAdapter.ItemViewHolder holder, int position) {
         CategoryItem categoryItem = listItem.get(position);
-        Glide.with(context).load(categoryItem.getImgUrl()).into(holder.imgItem);
+        Glide.with(context).load(categoryItem.getImg()).into(holder.imgItem);
     }
 
     @Override

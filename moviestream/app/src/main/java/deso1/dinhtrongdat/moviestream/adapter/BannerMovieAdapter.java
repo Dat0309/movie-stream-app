@@ -46,7 +46,7 @@ public class BannerMovieAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.banner_movie, null);
         ImageView imgBanner = view.findViewById(R.id.img_banner);
-        Glide.with(context).load(listBanner.get(position).getImgUrl()).into(imgBanner);
+        Glide.with(context).load(listBanner.get(position).getImg()).into(imgBanner);
         container.addView(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override

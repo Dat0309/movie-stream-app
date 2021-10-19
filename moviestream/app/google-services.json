@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1011731735174",
+    "project_id": "moviestream-f6661",
+    "storage_bucket": "moviestream-f6661.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011731735174:android:379d2fc80d63650b676707",
+        "android_client_info": {
+          "package_name": "deso1.dinhtrongdat.moviestream"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1011731735174-9oplk7gm10eucvjkad1pspbv7j98agpm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4k1JF_zI5IkUfIp4KoYmb9grvlJ9L_BQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1011731735174-9oplk7gm10eucvjkad1pspbv7j98agpm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

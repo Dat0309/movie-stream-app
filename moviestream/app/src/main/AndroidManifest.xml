@@ -3,6 +3,9 @@
     package="deso1.dinhtrongdat.moviestream">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -14,6 +17,7 @@
         <activity android:name=".VideoPlayer"
             android:screenOrientation="landscape"/>
         <activity android:name=".MovieDetail" />
+        <service android:name=".services.FloatingWidgetService"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

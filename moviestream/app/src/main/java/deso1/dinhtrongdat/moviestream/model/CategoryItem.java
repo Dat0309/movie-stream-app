@@ -3,26 +3,28 @@ package deso1.dinhtrongdat.moviestream.model;
 import java.io.Serializable;
 
 public class CategoryItem implements Serializable {
-    private int id;
+    private long id;
     private String name;
-    private String imgUrl;
-    private String fileUrl;
+    private String img;
+    private String video;
+    private String type;
 
     public CategoryItem() {
     }
 
-    public CategoryItem(int id, String name, String imgUrl,String fileUrl) {
+    public CategoryItem(long id,String imgUrl,String name,String type,String fileUrl) {
         this.id = id;
         this.name = name;
-        this.imgUrl = imgUrl;
-        this.fileUrl = fileUrl;
+        this.img = imgUrl;
+        this.video = fileUrl;
+        this.type = type;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -34,19 +36,27 @@ public class CategoryItem implements Serializable {
         this.name = name;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getImg() {
+        return img;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImg(String img) {
+        this.img = img;
     }
 
-    public String getFileUrl() {
-        return fileUrl;
+    public String getVideo() {
+        return video;
     }
 
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
+    public void setVideo(String video) {
+        this.video = video;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

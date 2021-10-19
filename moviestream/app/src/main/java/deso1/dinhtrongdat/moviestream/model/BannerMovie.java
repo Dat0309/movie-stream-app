@@ -3,50 +3,60 @@ package deso1.dinhtrongdat.moviestream.model;
 import java.io.Serializable;
 
 public class BannerMovie implements Serializable {
-    private int id;
-    private String movieName;
-    private String imgUrl;
-    private String fileUrl;
+    private long id;
+    private String name;
+    private String img;
+    private String video;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public BannerMovie() {
     }
 
-    public BannerMovie(int id, String movieName, String imgUrl, String fileUrl) {
+    public BannerMovie(int id, String movieName, String imgUrl, String fileUrl, String type) {
         this.id = id;
-        this.movieName = movieName;
-        this.imgUrl = imgUrl;
-        this.fileUrl = fileUrl;
+        this.name = movieName;
+        this.img = imgUrl;
+        this.video = fileUrl;
+        this.type = type;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getMovieName() {
-        return movieName;
+    public String getName() {
+        return name;
     }
 
-    public void setMovieName(String movieName) {
-        this.movieName = movieName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getImg() {
+        return img;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImg(String img) {
+        this.img = img;
     }
 
-    public String getFileUrl() {
-        return fileUrl;
+    public String getVideo() {
+        return video;
     }
 
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
+    public void setVideo(String video) {
+        this.video = video;
     }
 }
