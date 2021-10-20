@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import deso1.dinhtrongdat.moviestream.model.BannerMovie;
 import deso1.dinhtrongdat.moviestream.model.CategoryItem;
 
@@ -36,6 +37,7 @@ public class MovieDetail extends AppCompatActivity {
         txtDetail = findViewById(R.id.txtNameMovie);
         btnPlay = findViewById(R.id.btnPlay);
         imgBack = findViewById(R.id.imgBack);
+
 
         if(CategoryItem != null){
             Glide.with(this).load(CategoryItem.getImg()).into(imgDetail);

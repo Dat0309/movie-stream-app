@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
     List<CategoryItem> listItem1, listItem2, listItem3, listItem4, listItem5;
     DatabaseReference databaseReference;
     CircleImageView imgAvatar;
-    User currentUser;
+    String avatar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,24 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
         setContentView(R.layout.activity_main);
 
         checkAndRequesPermissions();
+
+        imgAvatar = findViewById(R.id.imgAvatar);
+
+        if (savedInstanceState != null){
+            avatar = savedInstanceState.getString("avatar");
+            Glide.with(MainActivity.this).load(avatar).into(imgAvatar);
+        }
         initUI();
+
+        if(avatar == null)
+            avatar = getIntent().getExtras().get("img").toString();
+        Glide.with(MainActivity.this).load(avatar).into(imgAvatar);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("avatar",avatar);
     }
 
     private void UpLoadMovie(){
@@ -104,10 +121,6 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
     private void initUI() {
         tabIndicater = findViewById(R.id.tab_indicator);
         tabCategory = findViewById(R.id.tabCategory);
-
-        imgAvatar = findViewById(R.id.imgAvatar);
-        String avatar = getIntent().getExtras().get("img").toString();
-        Glide.with(MainActivity.this).load(avatar).into(imgAvatar);
 
         listHomeBanner = new ArrayList<>();
         listTvShowBanner = new ArrayList<>();

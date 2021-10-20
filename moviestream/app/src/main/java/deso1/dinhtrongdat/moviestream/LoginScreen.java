@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import deso1.dinhtrongdat.moviestream.data.DataUser;
 import deso1.dinhtrongdat.moviestream.model.CategoryItem;
 import deso1.dinhtrongdat.moviestream.model.User;
 
@@ -42,6 +43,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     ImageButton btnFB, btnGG;
     LinearLayout layout, layoutBtn;
     List<CategoryItem> favorites;
+    String USER, PASS, IMG, NAME;
+    List<User> listUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +122,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     }
 
     private void isUser() {
+        favorites = new ArrayList<>();
         final String userName = edtUser.getEditText().getText().toString().trim();
         final String password = edtPass.getEditText().getText().toString().trim();
 
@@ -126,27 +130,28 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                favorites = new ArrayList<>();
                 Iterable<DataSnapshot> nodeChild = snapshot.getChildren();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    Map<String, Object> user = (Map<String, Object>) data.getValue();
-                    String USER = user.get("username").toString();
-                    String PASS = user.get("password").toString();
-                    String IMG = user.get("avatar").toString();
-                    String NAME = user.get("name").toString();
-                    favorites.add((CategoryItem) user.get("favotire"));
+                for (DataSnapshot data : nodeChild) {
+                    Map<String, Object> map = (Map<String, Object>) data.getValue();
+                    USER = map.get("username").toString();
+                    PASS = map.get("password").toString();
+                    IMG = map.get("avatar").toString();
+                    NAME = map.get("name").toString();
 
+                    CategoryItem item = data.child("favorite").getValue(CategoryItem.class);
+                    favorites.add(item);
 
                     if (userName.compareTo(USER) == 0) {
                         if (password.compareTo(PASS) == 0) {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             Bundle bundle = new Bundle();
-                            intent.putExtra("img", IMG);
-                            intent.putExtra("name", NAME);
+                            bundle.putString("img", IMG);
+                            bundle.putString("name", NAME);
                             bundle.putSerializable("favorite", (Serializable) favorites);
                             intent.putExtras(bundle);
                             startActivity(intent);
                             Toast.makeText(LoginScreen.this, favorites.get(0).getName(), Toast.LENGTH_LONG).show();
+                            break;
                         } else {
                             edtPass.setError("Sai mật khẩu");
                             edtPass.requestFocus();
@@ -155,16 +160,18 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                         edtUser.setError("Tài khoản không tồn tại");
                         edtUser.requestFocus();
                     }
+                    User user = new User(USER, PASS, NAME, favorites, IMG);
+                    listUser.add(user);
                 }
-
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Toast.makeText(LoginScreen.this, "Login Fail!!", Toast.LENGTH_LONG).show();
             }
         });
     }
+
+
 
     private boolean validationUser() {
         String val = edtUser.getEditText().getText().toString();
