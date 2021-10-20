@@ -19,22 +19,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import deso1.dinhtrongdat.moviestream.model.CategoryItem;
 import deso1.dinhtrongdat.moviestream.model.User;
 
-public class LoginScreen extends AppCompatActivity implements View.OnClickListener
-{
+public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
     ImageView logoImg;
     TextView txtTitle, txtDes;
     TextInputLayout edtUser, edtPass;
     Button btnLogin, btnSignUp;
     ImageButton btnFB, btnGG;
     LinearLayout layout, layoutBtn;
+    List<CategoryItem> favorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +81,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btnLogin:
-                if(!validationUser() | !validattionPass()){
+                if (!validationUser() | !validattionPass()) {
                     return;
                 }
                 isUser();
@@ -91,6 +98,26 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    private void getListFavorite() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        favorites = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("favorite");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    CategoryItem item = ds.getValue(CategoryItem.class);
+                    favorites.add(item);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Toast.makeText(LoginScreen.this, "Login Fail!!", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private void isUser() {
         final String userName = edtUser.getEditText().getText().toString().trim();
         final String password = edtPass.getEditText().getText().toString().trim();
@@ -99,74 +126,79 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                favorites = new ArrayList<>();
                 Iterable<DataSnapshot> nodeChild = snapshot.getChildren();
-                for(DataSnapshot data : nodeChild){
-                    User user = data.getValue(User.class);
-                    String USER = user.getUsername();
-                    String PASS = user.getPassword();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Map<String, Object> user = (Map<String, Object>) data.getValue();
+                    String USER = user.get("username").toString();
+                    String PASS = user.get("password").toString();
+                    String IMG = user.get("avatar").toString();
+                    String NAME = user.get("name").toString();
+                    favorites.add((CategoryItem) user.get("favotire"));
 
-                    if(userName.compareTo(USER)==0){
-                        if(password.compareTo(PASS) ==0){
+
+                    if (userName.compareTo(USER) == 0) {
+                        if (password.compareTo(PASS) == 0) {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra("user", user);
+                            Bundle bundle = new Bundle();
+                            intent.putExtra("img", IMG);
+                            intent.putExtra("name", NAME);
+                            bundle.putSerializable("favorite", (Serializable) favorites);
+                            intent.putExtras(bundle);
                             startActivity(intent);
-                        }
-                        else{
+                            Toast.makeText(LoginScreen.this, favorites.get(0).getName(), Toast.LENGTH_LONG).show();
+                        } else {
                             edtPass.setError("Sai mật khẩu");
                             edtPass.requestFocus();
                         }
-                    }
-                    else{
+                    } else {
                         edtUser.setError("Tài khoản không tồn tại");
                         edtUser.requestFocus();
                     }
                 }
+
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Toast.makeText(LoginScreen.this,"Login Fail!!",Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginScreen.this, "Login Fail!!", Toast.LENGTH_LONG).show();
             }
         });
     }
-    private boolean validationUser(){
+
+    private boolean validationUser() {
         String val = edtUser.getEditText().getText().toString();
         String space = "\\A\\w{4,20}\\z";
 
-        if(val.isEmpty()){
+        if (val.isEmpty()) {
             edtUser.setError("Nhập tài khoản");
             return false;
-        }
-        else if(val.length()>=15){
+        } else if (val.length() >= 15) {
             edtUser.setError("không được quá 15 ký tự");
             return false;
-        }
-        else if(!val.matches(space)){
+        } else if (!val.matches(space)) {
             edtUser.setError("Không được chứa khoảng trắng");
             return false;
-        }
-        else{
+        } else {
             edtUser.setError(null);
             return true;
         }
     }
-    private boolean validattionPass(){
+
+    private boolean validattionPass() {
         String val = edtPass.getEditText().getText().toString();
         String space = "\\A\\w{4,20}\\z";
 
-        if(val.isEmpty()){
+        if (val.isEmpty()) {
             edtPass.setError("Nhập mật khẩu");
             return false;
-        }
-        else if(val.length()>=15){
+        } else if (val.length() >= 15) {
             edtPass.setError("không được quá 15 ký tự");
             return false;
-        }
-        else if(!val.matches(space)){
+        } else if (!val.matches(space)) {
             edtPass.setError("Không được chứa khoảng trắng");
             return false;
-        }
-        else{
+        } else {
             edtPass.setError(null);
             return true;
         }

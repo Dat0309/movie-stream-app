@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,11 +26,13 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import deso1.dinhtrongdat.moviestream.adapter.BannerMovieAdapter;
 import deso1.dinhtrongdat.moviestream.adapter.MainRecycleAdapter;
 import deso1.dinhtrongdat.moviestream.model.AllCategory;
 import deso1.dinhtrongdat.moviestream.model.BannerMovie;
 import deso1.dinhtrongdat.moviestream.model.CategoryItem;
+import deso1.dinhtrongdat.moviestream.model.User;
 
 public class MainActivity extends AppCompatActivity implements MainRecycleAdapter.ListItemClickListener {
 
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
     List<AllCategory> listCategory;
     List<CategoryItem> listItem1, listItem2, listItem3, listItem4, listItem5;
     DatabaseReference databaseReference;
+    CircleImageView imgAvatar;
+    User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +104,10 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
     private void initUI() {
         tabIndicater = findViewById(R.id.tab_indicator);
         tabCategory = findViewById(R.id.tabCategory);
+
+        imgAvatar = findViewById(R.id.imgAvatar);
+        String avatar = getIntent().getExtras().get("img").toString();
+        Glide.with(MainActivity.this).load(avatar).into(imgAvatar);
 
         listHomeBanner = new ArrayList<>();
         listTvShowBanner = new ArrayList<>();

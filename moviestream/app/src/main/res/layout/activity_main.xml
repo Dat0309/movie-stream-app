@@ -36,6 +36,7 @@
                     android:src="@drawable/icons8_netflix_48px" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgAvatar"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
