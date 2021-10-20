@@ -8,3 +8,6 @@
 ![image](https://github.com/Dat0309/movie-stream-app/blob/main/Home.png)
 ![image](https://github.com/Dat0309/movie-stream-app/blob/main/Scroll.png)
 ![image](https://github.com/Dat0309/movie-stream-app/blob/main/detailMoview.png)
+![image](https://github.com/Dat0309/movie-stream-app/blob/main/SplashScreen.png)
+![image](https://github.com/Dat0309/movie-stream-app/blob/main/LoginScreen.png)
+![image](https://github.com/Dat0309/movie-stream-app/blob/main/SignUpScreen.png)
