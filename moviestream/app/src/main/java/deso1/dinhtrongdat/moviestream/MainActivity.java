@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
     List<CategoryItem> listItem1, listItem2, listItem3, listItem4, listItem5;
     DatabaseReference databaseReference;
     CircleImageView imgAvatar;
-    String avatar = null;
+    String avatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +61,11 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
             avatar = savedInstanceState.getString("avatar");
             Glide.with(MainActivity.this).load(avatar).into(imgAvatar);
         }
-        initUI();
-
-        if(avatar == null)
+        else if(avatar == null){
             avatar = getIntent().getExtras().get("img").toString();
-        Glide.with(MainActivity.this).load(avatar).into(imgAvatar);
+            Glide.with(MainActivity.this).load(avatar).into(imgAvatar);
+        }
+        initUI();
     }
 
     @Override
