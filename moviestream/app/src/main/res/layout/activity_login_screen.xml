@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginScreen"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="20dp"
+    android:transitionName="layout_trans"
+    android:id="@+id/layout_login">
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/logoImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/netflix_logo_icon"
+        android:layout_marginTop="50dp"
+        android:transitionName="logo_trans"/>
+    <TextView
+        android:id="@+id/txtTitle"
+        android:textSize="50sp"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:transitionName="text_trans"/>
+    <TextView
+        android:id="@+id/txtDes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/signin"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:transitionName="text_trans"/>
+    <LinearLayout
+        android:id="@+id/linear_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/username"
+            android:transitionName="user_trans"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/user"
+                android:fontFamily="@font/antic"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/password"
+            app:passwordToggleEnabled="true"
+            android:transitionName="pass_trans"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/pass"
+                android:inputType="textPassword"
+                android:fontFamily="@font/antic" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnFogotPass"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="@string/forgotpass"
+            android:layout_gravity="right"
+            android:elevation="0dp"
+            android:fontFamily="@font/antic"
+            android:textColor="@color/black"
+            android:layout_marginBottom="5dp"
+            android:transitionName="btn_trans"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLogin"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/custom_btn_login"
+            android:fontFamily="@font/antic"
+            android:transitionName="btn_trans"
+            android:textAllCaps="false"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/antic"
+            android:text="@string/or"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:transitionName="text_trans"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/signup"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_btn_login"
+            android:textColor="@color/white"
+            android:fontFamily="@font/antic"
+            android:transitionName="btn_trans"
+            android:textAllCaps="false"
+            android:textSize="20dp"/>
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_login_facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icons8_facebook_48px"
+            android:background="@android:color/transparent"
+            android:layout_margin="10dp"
+            android:transitionName="btn_trans"/>
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_login_google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icons8_google_48px"
+            android:background="@android:color/transparent"
+            android:transitionName="btn_trans"/>
+    </LinearLayout>
+
+</LinearLayout>

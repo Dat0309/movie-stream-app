@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">MovieStream</string>
+    <string name="welcome">Welcome</string>
+    <string name="signin">Sign in to continue</string>
+    <string name="user">User name</string>
+    <string name="pass">Password</string>
+    <string name="forgotpass">Forgot password</string>
+    <string name="login">Login</string>
+    <string name="or">or</string>
+    <string name="signup">SignUp</string>
+    <string name="singup_title">SignUp</string>
+    <string name="singup_slogan">Signup for free</string>
+    <string name="name">Name</string>
 </resources>

@@ -3,9 +3,9 @@
     package="deso1.dinhtrongdat.moviestream">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,11 +14,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieStream">
-        <activity android:name=".VideoPlayer"
-            android:screenOrientation="landscape"/>
+        <activity android:name=".RegisterScreen"></activity>
+        <activity android:name=".LoginScreen" />
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".VideoPlayer"
+            android:screenOrientation="landscape" />
         <activity android:name=".MovieDetail" />
-        <service android:name=".services.FloatingWidgetService"/>
-        <activity android:name=".MainActivity">
+
+        <service android:name=".services.FloatingWidgetService" />
+
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

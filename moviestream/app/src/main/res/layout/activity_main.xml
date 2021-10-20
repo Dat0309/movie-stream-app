@@ -27,7 +27,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/netflix_logo_icon" />
+                    android:src="@drawable/netflix_logo_icon"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -83,7 +83,6 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#0f171e"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
