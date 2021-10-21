@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import maes.tech.intentanim.CustomIntent;
 
@@ -29,10 +31,24 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this,LoginScreen.class);
-                startActivity(intent);
-                finish();
+                isLogin();
             }
         }, SPLASH_SCREEN);
+    }
+
+    private void isLogin(){
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user == null){
+            Intent intent = new Intent(SplashScreen.this,LoginScreen.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Intent intent = new Intent(SplashScreen.this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }

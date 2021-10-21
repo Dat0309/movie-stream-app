@@ -83,6 +83,8 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
         btnBack.setOnClickListener(this);
         btnSignUp.setOnClickListener(this);
+        btnFB.setOnClickListener(this);
+        btnGG.setOnClickListener(this);
     }
 
     @Override
@@ -124,6 +126,12 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                 });
 
                 finish();
+                break;
+            case R.id.btn_reg_facebook:
+                startActivity(new Intent(RegisterScreen.this, RegisterFacebook.class));
+                break;
+            case R.id.btn_reg_google:
+                startActivity(new Intent(RegisterScreen.this, RegisterGmail.class));
                 break;
         }
     }

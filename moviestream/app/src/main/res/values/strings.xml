@@ -11,4 +11,7 @@
     <string name="singup_title">SignUp</string>
     <string name="singup_slogan">Signup for free</string>
     <string name="name">Name</string>
+    <string name="signup_fb">SignUp with Facebook</string>
+    <string name="signup_gg">SignUp with Gmail</string>
+    <string name="email">Email</string>
 </resources>

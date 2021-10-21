@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterGmail"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:transitionName="layout_trans"
+    android:id="@+id/layout_registerFB">
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnBackGG"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/custom_btn_arrow"
+        android:src="@drawable/ic_baseline_arrow_back_ios_24"/>
+
+    <ImageView
+        android:id="@+id/logoSignUpGG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/icons8_gmail_48px"
+        android:transitionName="logo_trans"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
+        android:id="@+id/txtTitleSignUpGG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/signup_gg"
+        android:textAlignment="center"
+        android:textColor="#1B1A1A"
+        android:textSize="50sp"
+        android:transitionName="title_trans"/>
+
+    <LinearLayout
+        android:id="@+id/linear_signupGG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/username_signupGG"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:transitionName="user_trans">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                android:fontFamily="@font/antic" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/password_signupGG"
+            app:passwordToggleEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:transitionName="pass_trans">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/pass"
+                android:inputType="textPassword"
+                android:fontFamily="@font/antic" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRegisterGG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/signup"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_btn_login_gmail"
+            android:textColor="@color/white"
+            android:fontFamily="@font/antic"
+            android:transitionName="btn_trans"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/progres"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:SpinKit_Color="#3F51B5"
+        android:visibility="gone"/>
+
+</LinearLayout>
