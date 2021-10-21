@@ -3,21 +3,27 @@ package deso1.dinhtrongdat.moviestream;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.Wave;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -45,6 +51,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     List<CategoryItem> favorites;
     String USER, PASS, IMG, NAME;
     List<User> listUser;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +84,10 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         layoutBtn.setAnimation(botAnim);
         btnFB.setAnimation(botAnim);
         btnGG.setAnimation(botAnim);
+
+        progressBar = (ProgressBar)findViewById(R.id.progres);
+        Sprite wave = new Wave();
+        progressBar.setIndeterminateDrawable(wave);
 
         btnSignUp.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
@@ -122,7 +133,10 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     }
 
     private void isUser() {
+        progressBar.setVisibility(View.VISIBLE);
+        hideKeyboard(LoginScreen.this);
         favorites = new ArrayList<>();
+
         final String userName = edtUser.getEditText().getText().toString().trim();
         final String password = edtPass.getEditText().getText().toString().trim();
 
@@ -138,19 +152,24 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                     IMG = map.get("avatar").toString();
                     NAME = map.get("name").toString();
 
-                    CategoryItem item = data.child("favorite").getValue(CategoryItem.class);
-                    favorites.add(item);
+                    for(DataSnapshot ds : data.child("favorite").getChildren()){
+
+                        CategoryItem item = ds.getValue(CategoryItem.class);
+                        favorites.add(item);
+                    }
 
                     if (userName.compareTo(USER) == 0) {
                         if (password.compareTo(PASS) == 0) {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
                             Bundle bundle = new Bundle();
                             bundle.putString("img", IMG);
                             bundle.putString("name", NAME);
-                            bundle.putSerializable("favorite", (Serializable) favorites);
+                            bundle.putSerializable("fav", (Serializable) favorites);
+
                             intent.putExtras(bundle);
                             startActivity(intent);
-                            Toast.makeText(LoginScreen.this, favorites.get(0).getName(), Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE);
                             break;
                         } else {
                             edtPass.setError("Sai mật khẩu");
@@ -209,5 +228,14 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             edtPass.setError(null);
             return true;
         }
+    }
+
+    private static void hideKeyboard(Activity activity){
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if(view == null){
+            view = new View(activity);
+        }
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
