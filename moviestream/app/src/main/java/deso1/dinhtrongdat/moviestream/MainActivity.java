@@ -2,19 +2,32 @@ package deso1.dinhtrongdat.moviestream;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,12 +42,13 @@ import java.util.TimerTask;
 import de.hdodenhof.circleimageview.CircleImageView;
 import deso1.dinhtrongdat.moviestream.adapter.BannerMovieAdapter;
 import deso1.dinhtrongdat.moviestream.adapter.MainRecycleAdapter;
+import deso1.dinhtrongdat.moviestream.fragment.FavoriteFrg;
 import deso1.dinhtrongdat.moviestream.model.AllCategory;
 import deso1.dinhtrongdat.moviestream.model.BannerMovie;
 import deso1.dinhtrongdat.moviestream.model.CategoryItem;
 import deso1.dinhtrongdat.moviestream.model.User;
 
-public class MainActivity extends AppCompatActivity implements MainRecycleAdapter.ListItemClickListener {
+public class MainActivity extends AppCompatActivity implements MainRecycleAdapter.ListItemClickListener, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     BannerMovieAdapter bannerMovieAdapter;
     MainRecycleAdapter mainRecycleAdapter;
@@ -45,8 +59,15 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
     List<AllCategory> listCategory;
     List<CategoryItem> listItem1, listItem2, listItem3, listItem4, listItem5;
     DatabaseReference databaseReference;
-    CircleImageView imgAvatar;
+    CircleImageView imgAvatar, imgUser;
     String avatar;
+    FirebaseUser user;
+    DrawerLayout drawerLayout;
+    TextView txtName, txtUsername;
+    NavigationView navigationView;
+    Toolbar toolbar;
+    public static final int FRAGMENT_FAVORITE = 1;
+    int currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +76,20 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
 
         checkAndRequesPermissions();
 
+        toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawerLayout);
         imgAvatar = findViewById(R.id.imgAvatar);
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (savedInstanceState != null){
             avatar = savedInstanceState.getString("avatar");
-            Glide.with(MainActivity.this).load(avatar).into(imgAvatar);
+            Glide.with(MainActivity.this).load(avatar).error(R.drawable.user1).into(imgAvatar);
         }
         else if(avatar == null){
-            avatar = getIntent().getExtras().get("img").toString();
-            Glide.with(MainActivity.this).load(avatar).into(imgAvatar);
+            avatar = user.getPhotoUrl().toString();
+            Glide.with(MainActivity.this).load(avatar).error(R.drawable.user1).into(imgAvatar);
         }
         initUI();
     }
@@ -119,8 +145,12 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
     }
 
     private void initUI() {
+        navigationView = findViewById(R.id.nav_user);
+        txtName = navigationView.getHeaderView(0).findViewById(R.id.txtNavName);
+        txtUsername = navigationView.getHeaderView(0).findViewById(R.id.txtUserName);
         tabIndicater = findViewById(R.id.tab_indicator);
         tabCategory = findViewById(R.id.tabCategory);
+        imgUser = navigationView.getHeaderView(0).findViewById(R.id.img_user);
 
         listHomeBanner = new ArrayList<>();
         listTvShowBanner = new ArrayList<>();
@@ -183,6 +213,24 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
         });
 
         UpLoadMovie();
+
+
+        navigationView.setNavigationItemSelectedListener(this);
+        imgAvatar.setOnClickListener(this);
+        showUserInfomation();
+    }
+
+    private void showUserInfomation(){
+
+        if(user.getDisplayName().toString() == null){
+            txtName.setVisibility(View.GONE);
+        }
+        else{
+            txtName.setVisibility(View.VISIBLE);
+            txtName.setText(user.getDisplayName().toString());
+        }
+        txtUsername.setText(user.getEmail().toString());
+        Glide.with(MainActivity.this).load(user.getPhotoUrl().toString()).error(R.drawable.user1).into(imgUser);
     }
 
     private void setCategoryAdapter(List<AllCategory> listCategory) {
@@ -228,6 +276,43 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
 
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.imgAvatar:
+                showNavigationBar();
+                break;
+        }
+    }
+
+    private void showNavigationBar(){
+        drawerLayout.openDrawer(GravityCompat.END);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch(id){
+            case R.id.nav_fav:
+                if(currentFragment != FRAGMENT_FAVORITE){
+                    replaceFragment(new FavoriteFrg());
+                    currentFragment = FRAGMENT_FAVORITE;
+                }
+                drawerLayout.closeDrawer(GravityCompat.END);
+                break;
+
+        }
+        return true;
+    }
+
+    private void replaceFragment(Fragment fragment){
+        toolbar.setVisibility(View.GONE);
+        tabCategory.setVisibility(View.GONE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_layout, fragment);
+        transaction.commit();
+    }
+
     public class AutoSlider extends TimerTask{
 
         List<BannerMovie> list;
@@ -247,6 +332,16 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
                     viewPager.setCurrentItem(0);
                 }
             });
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.END)){
+            drawerLayout.closeDrawer(GravityCompat.END);
+        }
+        else{
+            super.onBackPressed();
         }
     }
 }

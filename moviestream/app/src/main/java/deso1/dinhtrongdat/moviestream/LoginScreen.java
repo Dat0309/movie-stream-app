@@ -91,6 +91,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         btnSignUp.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
+        btnGG.setOnClickListener(this);
     }
 
     @Override
@@ -109,6 +110,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginScreen.this, pairs);
                 startActivity(intent, options.toBundle());
                 break;
+            case R.id.btn_login_facebook:
+                break;
+            case R.id.btn_login_google:
+                startActivity(new Intent(LoginScreen.this, SignInGoogle.class));
+                break;
         }
     }
 
@@ -124,7 +130,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                     favorites.add(item);
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 Toast.makeText(LoginScreen.this, "Login Fail!!", Toast.LENGTH_LONG).show();
@@ -170,6 +175,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                             intent.putExtras(bundle);
                             startActivity(intent);
                             progressBar.setVisibility(View.GONE);
+                            finishAffinity();
                             break;
                         } else {
                             edtPass.setError("Sai mật khẩu");
@@ -179,8 +185,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                         edtUser.setError("Tài khoản không tồn tại");
                         edtUser.requestFocus();
                     }
-                    User user = new User(USER, PASS, NAME, favorites, IMG);
-                    listUser.add(user);
+//                    User user = new User(USER, PASS, NAME, favorites, IMG);
+//                    listUser.add(user);
                 }
             }
 

@@ -1,6 +1,5 @@
 package deso1.dinhtrongdat.moviestream;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -29,32 +28,32 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-public class RegisterGmail extends AppCompatActivity implements View.OnClickListener {
+public class SignInGoogle extends AppCompatActivity implements View.OnClickListener {
 
     ImageButton btnBack;
-    ImageView imgLogo;
+    ImageView logo;
     TextView txtTitle;
     TextInputLayout edtUser, edtPass;
-    Button btnSignup;
-    LinearLayout linear;
+    Button btnLogin;
     ProgressBar progressBar;
+    LinearLayout linear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_gmail);
+        setContentView(R.layout.activity_sign_in_google);
 
         initUI();
     }
 
     private void initUI() {
-        btnBack = findViewById(R.id.btnBackGG);
-        imgLogo = findViewById(R.id.logoSignUpGG);
-        txtTitle = findViewById(R.id.txtTitleSignUpGG);
-        edtUser = findViewById(R.id.username_signupGG);
-        edtPass = findViewById(R.id.password_signupGG);
-        btnSignup = findViewById(R.id.btnRegisterGG);
-        linear = findViewById(R.id.linear_signupGG);
+        btnBack = findViewById(R.id.btnBack_signGG);
+        logo = findViewById(R.id.logoSignInGG);
+        txtTitle = findViewById(R.id.txtTitleSignInGG);
+        edtUser = findViewById(R.id.username_signinGG);
+        edtPass = findViewById(R.id.password_signinGG);
+        btnLogin = findViewById(R.id.btnLoginGG);
+        linear = findViewById(R.id.linear_signInGG);
 
         progressBar = (ProgressBar)findViewById(R.id.progres);
         Sprite wave = new Wave();
@@ -65,69 +64,46 @@ public class RegisterGmail extends AppCompatActivity implements View.OnClickList
         Animation leftAnim = AnimationUtils.loadAnimation(this,R.anim.left_anim);
 
         btnBack.setAnimation(leftAnim);
-        imgLogo.setAnimation(topAnim);
+        logo.setAnimation(topAnim);
         txtTitle.setAnimation(topAnim);
         linear.setAnimation(botAnim);
 
+        btnLogin.setOnClickListener(this);
         btnBack.setOnClickListener(this);
-        btnSignup.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.btnBackGG:
-                finish();
-                break;
-            case R.id.btnRegisterGG:
-                createUser();
-                break;
-        }
-    }
-
-    private void createUser(){
+    private void signInGoogle(){
         if(!validationUser() | !validattionPass()){
             return;
         }
-        hideKeyboard(RegisterGmail.this);
+        hideKeyboard(SignInGoogle.this);
         progressBar.setVisibility(View.VISIBLE);
 
         String strEmail = edtUser.getEditText().getText().toString().trim();
         String strPass = edtPass.getEditText().getText().toString().trim();
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.createUserWithEmailAndPassword(strEmail, strPass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(strEmail, strPass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(RegisterGmail.this, "Success!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInGoogle.this, "Success!!", Toast.LENGTH_SHORT).show();
                     FirebaseUser user = auth.getCurrentUser();
 
-                    UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
-                            .setDisplayName("Dinh Trong Dat")
-                            .setPhotoUri(Uri.parse("https://firebasestorage.googleapis.com/v0/b/moviestream-f6661.appspot.com/o/avatars%2Fuser1.jpg?alt=media&token=776839ac-1a14-47d9-a6fc-bd0b7314cbe8"))
-                            .build();
+                    Intent intent = new Intent(SignInGoogle.this, MainActivity.class);
+                    startActivity(intent);
 
-                    user.updateProfile(profileChangeRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Intent intent = new Intent(RegisterGmail.this, MainActivity.class);
-                                startActivity(intent);
-
-                                finishAffinity();
-                                progressBar.setVisibility(View.GONE);
-                            }
-                        }
-                    });
+                    finishAffinity();
+                    progressBar.setVisibility(View.GONE);
                 }
                 else {
-                    Toast.makeText(RegisterGmail.this, "Fail!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInGoogle.this, "Fail!!", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
             }
         });
     }
+
     private boolean validationUser() {
         String val = edtUser.getEditText().getText().toString();
         String space = "\\A\\w{4,20}\\z";
@@ -167,5 +143,17 @@ public class RegisterGmail extends AppCompatActivity implements View.OnClickList
             view = new View(activity);
         }
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btnLoginGG:
+                signInGoogle();
+                break;
+            case R.id.btnBackGG:
+                finish();
+                break;
+        }
     }
 }

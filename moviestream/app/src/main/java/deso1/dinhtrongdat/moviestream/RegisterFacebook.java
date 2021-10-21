@@ -3,6 +3,7 @@ package deso1.dinhtrongdat.moviestream;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -16,7 +17,7 @@ import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.Wave;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class RegisterFacebook extends AppCompatActivity {
+public class RegisterFacebook extends AppCompatActivity implements View.OnClickListener {
 
     ImageButton btnBack;
     ImageView imgLogo;
@@ -55,5 +56,16 @@ public class RegisterFacebook extends AppCompatActivity {
         imgLogo.setAnimation(topAnim);
         txtTitle.setAnimation(topAnim);
         linear.setAnimation(botAnim);
+
+        btnBack.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btnBackFB:
+                finish();
+                break;
+        }
     }
 }

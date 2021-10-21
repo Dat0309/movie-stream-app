@@ -94,11 +94,11 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.btnRegister:
-                progressBar.setVisibility(View.VISIBLE);
-                hideKeyboard(RegisterScreen.this);
                 if(!validateUser() |!validatePass()|!validateName()){
                     return;
                 }
+                progressBar.setVisibility(View.VISIBLE);
+                hideKeyboard(RegisterScreen.this);
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
 
                 //GET ALL VALUE

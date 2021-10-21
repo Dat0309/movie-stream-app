@@ -5,21 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterGmail"
+    tools:context=".SignInGoogle"
     android:orientation="vertical"
     android:padding="20dp"
     android:transitionName="layout_trans"
     android:id="@+id/layout_registerGG">
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btnBackGG"
+        android:id="@+id/btnBack_signGG"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/custom_btn_arrow"
         android:src="@drawable/ic_baseline_arrow_back_ios_24"/>
 
     <ImageView
-        android:id="@+id/logoSignUpGG"
+        android:id="@+id/logoSignInGG"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -28,18 +28,18 @@
         android:layout_marginTop="50dp"/>
 
     <TextView
-        android:id="@+id/txtTitleSignUpGG"
+        android:id="@+id/txtTitleSignInGG"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
-        android:text="@string/signup_gg"
+        android:text="@string/signin_gg"
         android:textAlignment="center"
         android:textColor="#1B1A1A"
         android:textSize="50sp"
         android:transitionName="title_trans"/>
 
     <LinearLayout
-        android:id="@+id/linear_signupGG"
+        android:id="@+id/linear_signInGG"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -49,7 +49,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/username_signupGG"
+            android:id="@+id/username_signinGG"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:transitionName="user_trans">
             <com.google.android.material.textfield.TextInputEditText
@@ -63,7 +63,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/password_signupGG"
+            android:id="@+id/password_signinGG"
             app:passwordToggleEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:transitionName="pass_trans">
@@ -77,10 +77,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnRegisterGG"
+            android:id="@+id/btnLoginGG"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/signup"
+            android:text="@string/login"
             android:layout_marginTop="10dp"
             android:background="@drawable/custom_btn_login_gmail"
             android:textColor="@color/white"
