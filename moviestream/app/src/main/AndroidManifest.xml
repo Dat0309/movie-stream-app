@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieStream">
-        <activity android:name=".SignInGoogle"></activity>
+        <activity android:name=".FavoriteMovie"></activity>
+        <activity android:name=".SignInGoogle" />
         <activity android:name=".RegisterGmail" />
         <activity android:name=".RegisterFacebook" />
         <activity android:name=".RegisterScreen" />

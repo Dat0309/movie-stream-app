@@ -1,6 +1,5 @@
 package deso1.dinhtrongdat.moviestream;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -14,11 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
-import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -42,11 +39,9 @@ import java.util.TimerTask;
 import de.hdodenhof.circleimageview.CircleImageView;
 import deso1.dinhtrongdat.moviestream.adapter.BannerMovieAdapter;
 import deso1.dinhtrongdat.moviestream.adapter.MainRecycleAdapter;
-import deso1.dinhtrongdat.moviestream.fragment.FavoriteFrg;
 import deso1.dinhtrongdat.moviestream.model.AllCategory;
 import deso1.dinhtrongdat.moviestream.model.BannerMovie;
 import deso1.dinhtrongdat.moviestream.model.CategoryItem;
-import deso1.dinhtrongdat.moviestream.model.User;
 
 public class MainActivity extends AppCompatActivity implements MainRecycleAdapter.ListItemClickListener, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -91,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
             avatar = user.getPhotoUrl().toString();
             Glide.with(MainActivity.this).load(avatar).error(R.drawable.user1).into(imgAvatar);
         }
+
         initUI();
     }
 
@@ -294,10 +290,7 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
         int id = item.getItemId();
         switch(id){
             case R.id.nav_fav:
-                if(currentFragment != FRAGMENT_FAVORITE){
-                    replaceFragment(new FavoriteFrg());
-                    currentFragment = FRAGMENT_FAVORITE;
-                }
+                startActivity(new Intent(MainActivity.this, FavoriteMovie.class));
                 drawerLayout.closeDrawer(GravityCompat.END);
                 break;
 
@@ -306,8 +299,6 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
     }
 
     private void replaceFragment(Fragment fragment){
-        toolbar.setVisibility(View.GONE);
-        tabCategory.setVisibility(View.GONE);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_layout, fragment);
         transaction.commit();
