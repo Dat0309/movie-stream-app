@@ -30,6 +30,7 @@ import deso1.dinhtrongdat.moviestream.model.Favorite;
 public class MovieDetail extends AppCompatActivity implements View.OnClickListener {
     CategoryItem categoryItem;
     BannerMovie bannerItem;
+    Favorite favoriteItem;
     ImageView imgDetail, imgBack, imgAdd;
     TextView txtDetail;
     Button btnPlay;
@@ -45,6 +46,7 @@ public class MovieDetail extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_movie_detail);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
+        favoriteItem = (Favorite) getIntent().getSerializableExtra("favorite_item");
         categoryItem = (CategoryItem) getIntent().getSerializableExtra("category_item");
         bannerItem = (BannerMovie) getIntent().getSerializableExtra("banner");
 
@@ -63,9 +65,13 @@ public class MovieDetail extends AppCompatActivity implements View.OnClickListen
         if (categoryItem != null) {
             Glide.with(this).load(categoryItem.getImg()).into(imgDetail);
             txtDetail.setText(categoryItem.getName());
-        } else {
+        } else if(bannerItem != null){
             Glide.with(this).load(bannerItem.getImg()).into(imgDetail);
             txtDetail.setText(bannerItem.getName());
+        }
+        else{
+            Glide.with(this).load(favoriteItem.getImg()).into(imgDetail);
+            txtDetail.setText(favoriteItem.getName());
         }
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -75,8 +81,11 @@ public class MovieDetail extends AppCompatActivity implements View.OnClickListen
                 if (categoryItem != null) {
                     intent.putExtra("url", categoryItem.getVideo());
                     startActivity(intent);
-                } else {
+                } else if(bannerItem!=null){
                     intent.putExtra("url", bannerItem.getVideo());
+                    startActivity(intent);
+                }else{
+                    intent.putExtra("url",favoriteItem.getVideo());
                     startActivity(intent);
                 }
             }
@@ -107,8 +116,11 @@ public class MovieDetail extends AppCompatActivity implements View.OnClickListen
         Favorite currenFavorite;
         if(categoryItem!= null) {
             currenFavorite = new Favorite(categoryItem.getId(), categoryItem.getName(), categoryItem.getImg(), categoryItem.getType(), categoryItem.getVideo(), user.getUid());
-        }else{
+        }else if(bannerItem!=null){
             currenFavorite = new Favorite(bannerItem.getId(), bannerItem.getName(), bannerItem.getImg(), bannerItem.getType(), bannerItem.getVideo(), user.getUid());
+        }
+        else{
+            currenFavorite = favoriteItem;
         }
         reference = FirebaseDatabase.getInstance().getReference("favorite");
         reference.addValueEventListener(new ValueEventListener() {
@@ -139,8 +151,11 @@ public class MovieDetail extends AppCompatActivity implements View.OnClickListen
         Favorite currenFavorite;
         if(categoryItem!= null) {
             currenFavorite = new Favorite(categoryItem.getId(), categoryItem.getName(), categoryItem.getImg(), categoryItem.getType(), categoryItem.getVideo(), user.getUid());
-        }else{
+        }else if(bannerItem!=null){
             currenFavorite = new Favorite(bannerItem.getId(), bannerItem.getName(), bannerItem.getImg(), bannerItem.getType(), bannerItem.getVideo(), user.getUid());
+        }
+        else{
+            currenFavorite = favoriteItem;
         }
         reference = FirebaseDatabase.getInstance().getReference("favorite");
         reference.addValueEventListener(new ValueEventListener() {
@@ -182,8 +197,10 @@ public class MovieDetail extends AppCompatActivity implements View.OnClickListen
         Favorite favorite;
         if(categoryItem!= null) {
             favorite = new Favorite(categoryItem.getId(), categoryItem.getName(), categoryItem.getImg(), categoryItem.getType(), categoryItem.getVideo(), user.getUid());
-        }else{
+        }else if(bannerItem!=null){
             favorite = new Favorite(bannerItem.getId(), bannerItem.getName(), bannerItem.getImg(), bannerItem.getType(), bannerItem.getVideo(), user.getUid());
+        }else{
+            favorite = favoriteItem;
         }
 
         reference = FirebaseDatabase.getInstance().getReference("favorite");

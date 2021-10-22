@@ -20,10 +20,12 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
     private Context context;
     List<Favorite> listItem;
+    final private ListItemClickListener mOnClickListener;
 
-    public FavoriteAdapter(Context context, List<Favorite> listItem) {
+    public FavoriteAdapter(Context context, List<Favorite> listItem, ListItemClickListener mOnClickListener) {
         this.context = context;
         this.listItem = listItem;
+        this.mOnClickListener = mOnClickListener;
     }
 
     @Override
@@ -46,16 +48,26 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         return listItem.size();
     }
 
-    public class FavoriteViewHolder extends RecyclerView.ViewHolder {
+    public interface ListItemClickListener{
+        void onFavoriteItemClick(int clickedItemIndex);
+    }
+
+    public class FavoriteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView txtTitle, txtType;
         ImageView imgPoster;
 
         public FavoriteViewHolder(View itemView) {
             super(itemView);
-
+            itemView.setOnClickListener(this);
             txtTitle = itemView.findViewById(R.id.tv_title_fav);
             txtType = itemView.findViewById(R.id.tv_type_fav);
             imgPoster = itemView.findViewById(R.id.iv_poster_fav);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int clickedPosition = getAdapterPosition();
+            mOnClickListener.onFavoriteItemClick(clickedPosition);
         }
     }
 }
