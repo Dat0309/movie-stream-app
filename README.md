@@ -11,3 +11,5 @@
 ![image](https://github.com/Dat0309/movie-stream-app/blob/main/SplashScreen.png)
 ![image](https://github.com/Dat0309/movie-stream-app/blob/main/LoginScreen.png)
 ![image](https://github.com/Dat0309/movie-stream-app/blob/main/SignUpScreen.png)
+![image](https://github.com/Dat0309/movie-stream-app/blob/main/Navigationbar.png)
+![image](https://github.com/Dat0309/movie-stream-app/blob/main/FavoriteMovie.png)
